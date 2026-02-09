@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branzz Aplications X</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8a2be2;
+            --secondary-color: #9400d3;
+            --dark-color: #4b0082;
+            --light-color: #e6e6fa;
+            --accent-color: #da70d6;
+            --text-color: #f8f8ff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background-color: rgba(75, 0, 130, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header h1:hover {
+            color: var(--accent-color);
+            transform: scale(1.02);
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 500px;
+        }
+        
+        .left-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-right: 2px solid var(--accent-color);
+        }
+        
+        .profile-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--accent-color);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        
+        .profile-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--light-color);
+        }
+        
+        .profile-subtitle {
+            font-size: 1rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .tiktok-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .tiktok-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .tiktok-btn i {
+            font-size: 1.3rem;
+        }
+        
+        .right-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            text-align: left;
+        }
+        
+        .app-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .app-btn i {
+            font-size: 1.5rem;
+        }
+        
+        .app-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        
+        .follow-text {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(138, 43, 226, 0.3);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--accent-color);
+            font-style: italic;
+        }
+        
+        /* Modal de Admin */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .admin-content {
+            background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .admin-header h2 {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+        
+        .close-admin {
+            background-color: transparent;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-admin:hover {
+            color: var(--accent-color);
+        }
+        
+        .password-section {
+            margin-bottom: 30px;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+        
+        .password-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .admin-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+        
+        .admin-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .admin-section {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--light-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .button-item {
+            background-color: rgba(138, 43, 226, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--accent-color);
+        }
+        
+        .button-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .button-title {
+            font-weight: 600;
+        }
+        
+        .button-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            color: var(--accent-color);
+        }
+        
+        .update-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .update-fixed:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .left-section {
+                border-right: none;
+                border-bottom: 2px solid var(--accent-color);
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            .left-section, .right-section {
+                padding: 20px;
+            }
+            
+            .app-btn {
+                padding: 15px;
+                font-size: 1rem;
+            }
+            
+            .admin-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="siteTitle">Branzz Aplications X</h1>
+        </div>
+        
+        <div class="main-content">
+            <!-- Seção da Esquerda - Perfil TikTok -->
+            <div class="left-section">
+                <div class="profile-container">
+                    <img id="profileImage" src="https://github.com/shadcn.png" alt="Foto de Perfil" class="profile-image">
+                    <h2 class="profile-title" id="profileName">@dakz_sla9</h2>
+                    <p class="profile-subtitle">Please follow me on TikTok.</p>
+                    <button class="tiktok-btn" id="tiktokBtn">
+                        <i class="fab fa-tiktok"></i>
+                        <span id="tiktokUsername">@dakz_sla9</span>
+                    </button>
+                </div>
+                
+                <div class="follow-text">
+                    <p>Me siga para ganhar um site próprio para você customizar!</p>
+                </div>
+            </div>
+            
+            <!-- Seção da Direita - Botões de Aplicações -->
+            <div class="right-section">
+                <div class="btn-container">
+                    <button class="app-btn" id="privateServerBtn">
+                        <img src="https://tr.rbxcdn.com/7d6e4f40c4e0c31b20a99c6b6d0b22ed/150/150/Image/Png" alt="Escape Tsunami" class="app-image">
+                        <div>
+                            <div>Free server Private</div>
+                            <div style="font-size: 0.8rem; font-weight: 300;">Escape Tsunami For Brainrots</div>
+                        </div>
+                    </button>
+                    
+                    <button class="app-btn" id="robloxBtn">
+                        <i class="fas fa-gamepad"></i>
+                        <div>Follow me on Roblox</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Botão Fixo de Update (apenas visível no admin) -->
+    <button class="update-fixed" id="updateBtn" style="display: none;">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+    
+    <!-- Notificação -->
+    <div class="notification" id="notification">
+        Site atualizado com sucesso!
+    </div>
+    
+    <!-- Modal de Admin -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>Painel de Administração</h2>
+                <button class="close-admin" id="closeAdmin">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="password-section" id="passwordSection">
+                <input type="password" class="password-input" id="adminPassword" placeholder="Digite a senha de administração">
+                <button class="admin-btn" id="loginAdmin">Acessar Painel</button>
+            </div>
+            
+            <div class="admin-section" id="adminPanel">
+                <h3 class="section-title">Configurações do Site</h3>
+                
+                <div class="form-group">
+                    <label class="form-label">Título do Site</label>
+                    <input type="text" class="form-control" id="siteTitleInput" value="Branzz Aplications X">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">URL da Foto de Perfil (TikTok)</label>
+                    <input type="text" class="form-control" id="profileImageInput" value="https://github.com/shadcn.png">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Nome de Usuário do TikTok</label>
+                    <input type="text" class="form-control" id="tiktokUsernameInput" value="@dakz_sla9">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Link do Perfil do TikTok</label>
+                    <input type="text" class="form-control" id="tiktokLinkInput" value="https://www.tiktok.com/@dakz_sla9?_r=1&_t=ZS-93lPFf7bi8A">
+                </div>
+                
+                <h3 class="section-title">Gerenciar Botões</h3>
+                
+                <div class="buttons-grid" id="buttonsList">
+                    <!-- Botões serão inseridos aqui dinamicamente -->
+                </div>
+                
+                <button class="admin-btn" id="addButtonBtn">
+                    <i class="fas fa-plus"></i> Adicionar Novo Botão
+                </button>
+                
+                <div class="form-group" style="margin-top: 30px;">
+                    <button class="admin-btn" id="saveChangesBtn">Salvar Alterações Localmente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elementos do DOM
+        const siteTitle = document.getElementById('siteTitle');
+        const profileImage = document.getElementById('profileImage');
+        const profileName = document.getElementById('profileName');
+        const tiktokBtn = document.getElementById('tiktokBtn');
+        const tiktokUsername = document.getElementById('tiktokUsername');
+        const privateServerBtn = document.getElementById('privateServerBtn');
+        const robloxBtn = document.getElementById('robloxBtn');
+        const adminModal = document.getElementById('adminModal');
+        const closeAdmin = document.getElementById('closeAdmin');
+        const adminPassword = document.getElementById('adminPassword');
+        const loginAdmin = document.getElementById('loginAdmin');
+        const passwordSection = document.getElementById('passwordSection');
+        const adminPanel = document.getElementById('adminPanel');
+        const updateBtn = document.getElementById('updateBtn');
+        const notification = document.getElementById('notification');
+        
+        // Elementos do painel de admin
+        const siteTitleInput = document.getElementById('siteTitleInput');
+        const profileImageInput = document.getElementById('profileImageInput');
+        const tiktokUsernameInput = document.getElementById('tiktokUsernameInput');
+        const tiktokLinkInput = document.getElementById('tiktokLinkInput');
+        const buttonsList = document.getElementById('buttonsList');
+        const addButtonBtn = document.getElementById('addButtonBtn');
+        const saveChangesBtn = document.getElementById('saveChangesBtn');
+        
+        // Dados dos botões
+        let buttonsData = [
+            {
+                id: 1,
+                title: "Free server Private",
+                subtitle: "Escape Tsunami For Brainrots",
+                link: "https://www.robiox.com.ps/games/131623223084840/Escape-Tsunami-For-Brainrots?privateServerLinkCode=54782558517802756282057942503506",
+                image: "https://tr.rbxcdn.com/7d6e4f40c4e0c31b20a99c6b6d0b22ed/150/150/Image/Png",
+                type: "game"
+            },
+            {
+                id: 2,
+                title: "Follow me on Roblox",
+                subtitle: "Perfil no Roblox",
+                link: "https://www.roblox.com.ml/users/4725933880/profile",
+                image: "",
+                type: "profile"
+            }
+        ];
+        
+        // Contador para cliques no título
+        let titleClickCount = 0;
+        let titleClickTimer = null;
+        
+        // Senha de admin
+        const ADMIN_PASSWORD = "Breno9890";
+        
+        // Verificar se já existe dados salvos no localStorage
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('branzzAppData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // Aplicar dados salvos
+                if (data.siteTitle) {
+                    siteTitle.textContent = data.siteTitle;
+                    siteTitleInput.value = data.siteTitle;
+                }
+                
+                if (data.profileImage) {
+                    profileImage.src = data.profileImage;
+                    profileImageInput.value = data.profileImage;
+                }
+                
+                if (data.tiktokUsername) {
+                    profileName.textContent = data.tiktokUsername;
+                    tiktokUsername.textContent = data.tiktokUsername;
+                    tiktokUsernameInput.value = data.tiktokUsername;
+                }
+                
+                if (data.tiktokLink) {
+                    tiktokLinkInput.value = data.tiktokLink;
+                }
+                
+                if (data.buttons) {
+                    buttonsData = data.buttons;
+                }
+            }
+        }
+        
+        // Salvar dados no localStorage
+        function saveToLocalStorage() {
+            const data = {
+                siteTitle: siteTitleInput.value,
+                profileImage: profileImageInput.value,
+                tiktokUsername: tiktokUsernameInput.value,
+                tiktokLink: tiktokLinkInput.value,
+                buttons: buttonsData
+            };
+            
+            localStorage.setItem('branzzAppData', JSON.stringify(data));
+            showNotification("Alterações salvas localmente!");
+        }
+        
+        // Carregar dados ao iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFromLocalStorage();
+            renderButtons();
+            
+            // Atualizar os botões da interface principal
+            updateMainButtons();
+        });
+        
+        // Clique no título para abrir admin
+        siteTitle.addEventListener('click', function() {
+            titleClickCount++;
+            
+            // Limpar timer anterior
+            if (titleClickTimer) {
+                clearTimeout(titleClickTimer);
+            }
+            
+            // Se atingiu 3 cliques, abrir modal de admin
+            if (titleClickCount >= 3) {
+                adminModal.style.display = 'flex';
+                titleClickCount = 0;
+            }
+            
+            // Resetar contador após 1 segundo
+            titleClickTimer = setTimeout(() => {
+                titleClickCount = 0;
+            }, 1000);
+        });
+        
+        // Fechar modal de admin
+        closeAdmin.addEventListener('click', function() {
+            adminModal.style.display = 'none';
+            adminPassword.value = '';
+            passwordSection.style.display = 'block';
+            adminPanel.style.display = 'none';
+            updateBtn.style.display = 'none';
+        });
+        
+        // Login no painel de admin
+        loginAdmin.addEventListener('click', function() {
+            if (adminPassword.value === ADMIN_PASSWORD) {
+                passwordSection.style.display = 'none';
+                adminPanel.style.display = 'block';
+                updateBtn.style.display = 'flex';
+                showNotification("Painel de administração ativado!");
+            } else {
+                alert("Senha incorreta!");
+                adminPassword.value = '';
+            }
+        });
+        
+        // Botão TikTok - Abrir perfil
+        tiktokBtn.addEventListener('click', function() {
+            window.open(tiktokLinkInput.value || "https://www.tiktok.com/@dakz_sla9?_r=1&_t=ZS-93lPFf7bi8A", "_blank");
+        });
+        
+        // Botão Private Server - Abrir link
+        privateServerBtn.addEventListener('click', function() {
+            const button = buttonsData.find(btn => btn.id === 1);
+            if (button) {
+                window.open(button.link, "_blank");
+            }
+        });
+        
+        // Botão Roblox - Abrir perfil
+        robloxBtn.addEventListener('click', function() {
+            const button = buttonsData.find(btn => btn.id === 2);
+            if (button) {
+                window.open(button.link, "_blank");
+            }
+        });
+        
+        // Renderizar botões no painel de admin
+        function renderButtons() {
+            buttonsList.innerHTML = '';
+            
+            buttonsData.forEach(button => {
+                const buttonElement = document.createElement('div');
+                buttonElement.className = 'button-item';
+                buttonElement.innerHTML = `
+                    <div class="button-header">
+                        <div class="button-title">${button.title}</div>
+                        <div class="button-actions">
+                            <button class="action-btn edit-btn" data-id="${button.id}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-btn" data-id="${button.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div>${button.subtitle || ''}</div>
+                    <div style="font-size: 0.8rem; margin-top: 5px; color: #da70d6;">${button.link.substring(0, 50)}...</div>
+                `;
+                
+                buttonsList.appendChild(buttonElement);
+            });
+            
+            // Adicionar eventos para os botões de editar e excluir
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    editButton(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    deleteButton(id);
+                });
+            });
+        }
+        
+        // Adicionar novo botão
+        addButtonBtn.addEventListener('click', function() {
+            const newId = buttonsData.length > 0 ? Math.max(...buttonsData.map(b => b.id)) + 1 : 1;
+            
+            const newButton = {
+                id: newId,
+                title: "Novo Botão",
+                subtitle: "Descrição do botão",
+                link: "https://exemplo.com",
+                image: "",
+                type: "custom"
+            };
+            
+            buttonsData.push(newButton);
+            renderButtons();
+            showNotification("Novo botão adicionado!");
+        });
+        
+        // Editar botão
+        function editButton(id) {
+            const button = buttonsData.find(btn => btn.id === id);
+            if (!button) return;
+            
+            const newTitle = prompt("Digite o novo título do botão:", button.title);
+            if (newTitle !== null) button.title = newTitle;
+            
+            const newSubtitle = prompt("Digite a nova descrição (opcional):", button.subtitle || "");
+            if (newSubtitle !== null) button.subtitle = newSubtitle;
+            
+            const newLink = prompt("Digite o novo link:", button.link);
+            if (newLink !== null) button.link = newLink;
+            
+            const newImage = prompt("Digite a URL da nova imagem (deixe em branco para ícone padrão):", button.image || "");
+            if (newImage !== null) button.image = newImage;
+            
+            renderButtons();
+            updateMainButtons();
+            showNotification("Botão atualizado!");
+        }
+        
+        // Excluir botão
+        function deleteButton(id) {
+            if (buttonsData.length <= 2) {
+                alert("Você precisa ter pelo menos 2 botões!");
+                return;
+            }
+            
+            if (confirm("Tem certeza que deseja excluir este botão?")) {
+                buttonsData = buttonsData.filter(btn => btn.id !== id);
+                renderButtons();
+                updateMainButtons();
+                showNotification("Botão excluído!");
+            }
+        }
+        
+        // Atualizar botões na interface principal
+        function updateMainButtons() {
+            // Atualizar botão do servidor privado
+            const privateServerButton = buttonsData.find(btn => btn.id === 1);
+            if (privateServerButton) {
+                privateServerBtn.innerHTML = `
+                    ${privateServerButton.image ? 
+                        `<img src="${privateServerButton.image}" alt="${privateServerButton.title}" class="app-image">` : 
+                        '<i class="fas fa-gamepad"></i>'
+                    }
+                    <div>
+                        <div>${privateServerButton.title}</div>
+                        ${privateServerButton.subtitle ? `<div style="font-size: 0.8rem; font-weight: 300;">${privateServerButton.subtitle}</div>` : ''}
+                    </div>
+                `;
+            }
+            
+            // Atualizar botão do Roblox
+            const robloxButton = buttonsData.find(btn => btn.id === 2);
+            if (robloxButton) {
+                robloxBtn.innerHTML = `
+                    ${robloxButton.image ? 
+                        `<img src="${robloxButton.image}" alt="${robloxButton.title}" class="app-image">` : 
+                        '<i class="fas fa-gamepad"></i>'
+                    }
+                    <div>${robloxButton.title}</div>
+                `;
+            }
+            
+            // Adicionar botões extras se existirem
+            const extraButtons = buttonsData.filter(btn => btn.id > 2);
+            const btnContainer = document.querySelector('.btn-container');
+            
+            // Remover botões extras antigos (exceto os dois primeiros)
+            const existingButtons = btnContainer.querySelectorAll('.app-btn');
+            for (let i = 2; i < existingButtons.length; i++) {
+                existingButtons[i].remove();
+            }
+            
+            // Adicionar novos botões extras
+            extraButtons.forEach(button => {
+                const newButton = document.createElement('button');
+                newButton.className = 'app-btn';
+                newButton.innerHTML = `
+                    ${button.image ? 
+                        `<img src="${button.image}" alt="${button.title}" class="app-image">` : 
+                        '<i class="fas fa-link"></i>'
+                    }
+                    <div>
+                        <div>${button.title}</div>
+                        ${button.subtitle ? `<div style="font-size: 0.8rem; font-weight: 300;">${button.subtitle}</div>` : ''}
+                    </div>
+                `;
+                
+                newButton.addEventListener('click', function() {
+                    window.open(button.link, "_blank");
+                });
+                
+                btnContainer.appendChild(newButton);
+            });
+        }
+        
+        // Salvar alterações localmente
+        saveChangesBtn.addEventListener('click', function() {
+            // Atualizar dados com as entradas do formulário
+            siteTitle.textContent = siteTitleInput.value;
+            profileImage.src = profileImageInput.value;
+            profileName.textContent = tiktokUsernameInput.value;
+            tiktokUsername.textContent = tiktokUsernameInput.value;
+            
+            // Atualizar botões
+            updateMainButtons();
+            
+            // Salvar no localStorage
+            saveToLocalStorage();
+        });
+        
+        // Botão de update (simulação de atualização em tempo real)
+        updateBtn.addEventListener('click', function() {
+            showNotification("Atualizando site para todos os usuários...");
+            
+            // Em um sistema real, aqui você enviaria as alterações para um servidor
+            // que notificaria todos os clientes conectados
+            // Por enquanto, apenas simulamos com um delay
+            setTimeout(() => {
+                showNotification("Site atualizado com sucesso para todos os dispositivos!");
+            }, 1500);
+        });
+        
+        // Mostrar notificação
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Atualizar automaticamente quando os campos do formulário são alterados
+        siteTitleInput.addEventListener('input', function() {
+            siteTitle.textContent = this.value;
+        });
+        
+        profileImageInput.addEventListener('input', function() {
+            profileImage.src = this.value;
+        });
+        
+        tiktokUsernameInput.addEventListener('input', function() {
+            profileName.textContent = this.value;
+            tiktokUsername.textContent = this.value;
+        });
+    </script>
+</body>
+</html>
